@@ -26,10 +26,10 @@ const SEED: Game[] = [
 
 const KV_KEY = 'gitgud:games'
 
+// In-memory fallback for local dev
 let memStore: Game[] | null = null
 
 function getRedis(): Redis | null {
-  // Try all possible env var names Vercel/Upstash might inject
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
@@ -39,18 +39,15 @@ function getRedis(): Redis | null {
 export async function readGames(): Promise<Game[]> {
   const redis = getRedis()
   if (redis) {
-    try {
-      const raw = await redis.get(KV_KEY)
-      if (!raw) {
-        await redis.set(KV_KEY, JSON.stringify(SEED))
-        return SEED
-      }
-      return typeof raw === 'string' ? JSON.parse(raw) : raw as Game[]
-    } catch (e) {
-      console.error('Redis read error:', e)
-      return []
+    // @upstash/redis auto-serializes — do NOT use JSON.stringify/parse
+    const games = await redis.get<Game[]>(KV_KEY)
+    if (!games) {
+      await redis.set(KV_KEY, SEED)
+      return SEED
     }
+    return games
   }
+  // Local dev fallback
   if (!memStore) memStore = [...SEED]
   return memStore
 }
@@ -58,11 +55,7 @@ export async function readGames(): Promise<Game[]> {
 export async function writeGames(games: Game[]): Promise<void> {
   const redis = getRedis()
   if (redis) {
-    try {
-      await redis.set(KV_KEY, JSON.stringify(games))
-    } catch (e) {
-      console.error('Redis write error:', e)
-    }
+    await redis.set(KV_KEY, games)
   } else {
     memStore = games
   }
