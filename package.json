@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "nuxt": "^3.13.0"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.34.3"
   }
 }
