@@ -1,0 +1,75 @@
+[
+  {
+    "id": "656ccae4-73f1-4180-9298-c62d078f547c",
+    "name": "Codenames",
+    "category": "Party",
+    "minPlayers": 4,
+    "maxPlayers": 8,
+    "durationMin": 20,
+    "difficulty": "Easy",
+    "description": "Two rival spymasters give one-word clues to help their team guess secret agent names.",
+    "available": true,
+    "createdAt": "2026-03-22T04:47:36.907Z"
+  },
+  {
+    "id": "a86a2c41-7931-4634-8a0f-c473c3120d7c",
+    "name": "Pandemic",
+    "category": "Cooperative",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "durationMin": 60,
+    "difficulty": "Medium",
+    "description": "Work together to stop four deadly diseases from spreading across the globe.",
+    "available": false,
+    "createdAt": "2026-03-22T04:47:36.907Z"
+  },
+  {
+    "id": "e8d2a403-8d41-4789-8463-74d4a8c2dfbe",
+    "name": "Terraforming Mars",
+    "category": "Strategy",
+    "minPlayers": 1,
+    "maxPlayers": 5,
+    "durationMin": 180,
+    "difficulty": "Hard",
+    "description": "Compete to make Mars habitable by raising temperature, oxygen, and ocean coverage.",
+    "available": true,
+    "createdAt": "2026-03-22T04:47:36.907Z"
+  },
+  {
+    "id": "fbf9809b-28a2-420b-b2ae-5bbbe4e7f154",
+    "name": "Exploding Kittens",
+    "category": "Party",
+    "minPlayers": 2,
+    "maxPlayers": 5,
+    "durationMin": 20,
+    "difficulty": "Easy",
+    "description": "A highly strategic, kitty-powered version of Russian Roulette.",
+    "available": true,
+    "createdAt": "2026-03-22T04:47:36.907Z"
+  },
+  {
+    "id": "59cfaf81-4398-491d-b84a-bb2ff98ece06",
+    "name": "Gloomhaven",
+    "category": "Cooperative",
+    "minPlayers": 1,
+    "maxPlayers": 4,
+    "durationMin": 120,
+    "difficulty": "Expert",
+    "description": "A game of tactical combat in an ever-changing dungeon crawl world.",
+    "available": false,
+    "createdAt": "2026-03-22T04:47:36.907Z"
+  },
+  {
+    "name": "Peler",
+    "category": "Strategy",
+    "minPlayers": 2,
+    "maxPlayers": 4,
+    "durationMin": 60,
+    "difficulty": "Hard",
+    "description": "Gokil",
+    "available": false,
+    "id": "310474f4-85b7-43d9-a986-604dcf6c1093",
+    "createdAt": "2026-03-22T04:49:20.340Z",
+    "updatedAt": "2026-03-22T04:49:28.920Z"
+  }
+]
