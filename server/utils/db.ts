@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto'
+import { Redis } from '@upstash/redis'
 
 export interface Game {
   id: string
@@ -25,37 +26,35 @@ const SEED: Game[] = [
 
 const KV_KEY = 'gitgud:games'
 
-// In-memory fallback for local dev
+// In-memory fallback for local dev only
 let memStore: Game[] | null = null
 
-function getRedis() {
-  const { Redis } = require('@upstash/redis')
-  return new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  })
+function getRedis(): Redis | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  if (!url || !token) return null
+  return new Redis({ url, token })
 }
 
-const isUpstash = !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
-
 export async function readGames(): Promise<Game[]> {
-  if (isUpstash) {
-    const redis = getRedis()
+  const redis = getRedis()
+  if (redis) {
     const games = await redis.get<Game[]>(KV_KEY)
-    if (!games) {
-      await redis.set(KV_KEY, SEED)
+    if (!games || (Array.isArray(games) && games.length === 0)) {
+      await redis.set(KV_KEY, JSON.stringify(SEED))
       return SEED
     }
-    return games
+    return typeof games === 'string' ? JSON.parse(games) : games
   }
+  // Local dev fallback
   if (!memStore) memStore = [...SEED]
   return memStore
 }
 
 export async function writeGames(games: Game[]): Promise<void> {
-  if (isUpstash) {
-    const redis = getRedis()
-    await redis.set(KV_KEY, games)
+  const redis = getRedis()
+  if (redis) {
+    await redis.set(KV_KEY, JSON.stringify(games))
   } else {
     memStore = games
   }
