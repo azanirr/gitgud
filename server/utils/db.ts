@@ -26,12 +26,12 @@ const SEED: Game[] = [
 
 const KV_KEY = 'gitgud:games'
 
-// In-memory fallback for local dev only
 let memStore: Game[] | null = null
 
 function getRedis(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  // Try all possible env var names Vercel/Upstash might inject
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
   return new Redis({ url, token })
 }
@@ -39,14 +39,18 @@ function getRedis(): Redis | null {
 export async function readGames(): Promise<Game[]> {
   const redis = getRedis()
   if (redis) {
-    const games = await redis.get<Game[]>(KV_KEY)
-    if (!games || (Array.isArray(games) && games.length === 0)) {
-      await redis.set(KV_KEY, JSON.stringify(SEED))
-      return SEED
+    try {
+      const raw = await redis.get(KV_KEY)
+      if (!raw) {
+        await redis.set(KV_KEY, JSON.stringify(SEED))
+        return SEED
+      }
+      return typeof raw === 'string' ? JSON.parse(raw) : raw as Game[]
+    } catch (e) {
+      console.error('Redis read error:', e)
+      return []
     }
-    return typeof games === 'string' ? JSON.parse(games) : games
   }
-  // Local dev fallback
   if (!memStore) memStore = [...SEED]
   return memStore
 }
@@ -54,7 +58,11 @@ export async function readGames(): Promise<Game[]> {
 export async function writeGames(games: Game[]): Promise<void> {
   const redis = getRedis()
   if (redis) {
-    await redis.set(KV_KEY, JSON.stringify(games))
+    try {
+      await redis.set(KV_KEY, JSON.stringify(games))
+    } catch (e) {
+      console.error('Redis write error:', e)
+    }
   } else {
     memStore = games
   }
