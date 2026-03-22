@@ -16,14 +16,14 @@
 
       <div class="container hero-content">
         <div class="hero-badge anim-fade-up">
-          ☕ Bandung's #1 Board Game Café
+          ☕ Yogyakarta's #1 Board Game Café
         </div>
         <h1 class="hero-title anim-fade-up delay-1">
           Play Hard,<br/>
           <span class="hero-accent">Brew Good</span>
         </h1>
         <p class="hero-sub anim-fade-up delay-2">
-          The spot in Bandung where great coffee meets epic board games.
+          The spot in Yogyakarta where great coffee meets epic board games.
           Gather your crew, pick a game, and let's git gud together!
         </p>
         <div class="hero-cta anim-fade-up delay-3">
@@ -86,7 +86,7 @@
             are made over a great cup of coffee and an intense board game session.
           </p>
           <p>
-            Located in Bandung, we've curated a collection of games for every type
+            Located in Yogyakarta, we've curated a collection of games for every type
             of player — from casual party games to deep strategy titles that'll
             keep you at the table all night long.
           </p>
@@ -184,7 +184,7 @@
         <div class="cta-text">
           <h2 style="color:var(--white)">Ready to Play? 🎲</h2>
           <p style="color:rgba(255,255,255,0.85)">
-            Come visit us in Bandung. Bring your friends, grab a coffee, and let the games begin!
+            Come visit us in Yogyakarta. Bring your friends, grab a coffee, and let the games begin!
           </p>
         </div>
         <div class="cta-actions">
@@ -204,7 +204,7 @@
             <span class="logo-box">GitGud</span>
             <span class="logo-sub">Boardgame &amp; Cafe</span>
           </div>
-          <p class="footer-tagline">Coffee & Board Games · Bandung, Indonesia</p>
+          <p class="footer-tagline">Coffee & Board Games · Yogyakarta, Indonesia</p>
         </div>
         <div class="footer-links">
           <a href="https://www.instagram.com/letsgitgud/" target="_blank" rel="noopener">📸 Instagram</a>
